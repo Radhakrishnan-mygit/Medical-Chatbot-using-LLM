@@ -5,6 +5,9 @@ __pycache__/
 
 # C extensions
 *.so
+#model
+model/llama-2-7b-chat.Q2_K.gguf
+
 
 # Distribution / packaging
 .Python
