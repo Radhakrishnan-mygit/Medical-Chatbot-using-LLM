@@ -6,7 +6,7 @@ from langchain.prompts import PromptTemplate
 from langchain.llms import CTransformers
 from src.helper import load_embedding_model
 from src.prompt import prompt_template
-from flask import Flask,jsonify,Response,render_template
+from flask import Flask,jsonify,Response,render_template,request
 import os
 import pinecone
 from dotenv import load_dotenv
@@ -32,7 +32,7 @@ doc_search=PineconeVectorStore.from_existing_index(index_name=index_name,embeddi
 model_path = r"model/llama-2-7b-chat.Q2_K.gguf"
 
 # Initialize the model with specific configurations
-llm = CTransformers(model=model_path, model_type="llama", config={'max_new_tokens': 150,'temperature':5})
+llm = CTransformers(model=model_path, model_type="llama", config={'max_new_tokens': 150,'temperature':3})
 qa=RetrievalQA.from_chain_type(
    llm=llm,
    chain_type="stuff",
@@ -44,6 +44,15 @@ qa=RetrievalQA.from_chain_type(
 @app.route('/')
 def index():
    return render_template("chat.html")
+
+@app.route('/get',methods=["GET","POST"])
+def chat():
+   mes=request.form["msg"]
+   input=mes
+   print(input)
+   result=qa({"query":input})
+   print("Response : ",result["result"])
+   return str(result["result"])
 
 if __name__=="__main__":
    app.run()
