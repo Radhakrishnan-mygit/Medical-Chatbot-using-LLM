@@ -31,10 +31,5 @@ The application works by using a combination of RAG (retrieval-augmented generat
 4. **Response Generation**:
    - The generated response is returned to the user, providing answers about diseases, solutions, or any other medical query.
 
-## Setup & Installation
-
-### Prerequisites:
-- Python 3.7+
-- `pip` package manager
 
 
